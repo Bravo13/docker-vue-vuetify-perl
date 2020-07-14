@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+  db:
+    image: mysql:8
+    networks: 
+      - nginx_network
+
+  redis:
+    image: "redis:alpine"
+    networks:
+      - nginx_network
+
+  backend:
+    build: .
+    command: bash -c "python3 /code/manage.py migrate --noinput && gunicorn app.wsgi -b 0.0.0.0:8000"
+    volumes:
+      - ./backend:/code
+    # ports:
+    #   - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - nginx_network
+
+  frontendbuilder:
+    image: node:12.18.2
+    volumes: 
+      - ./frontend:/opt
+    command: bash -c "npm i && npm run build"
+    working_dir: /opt
+
+  nginx:
+    image: nginx:1.13
+    build:
+      context: .
+      dockerfile: ./config/nginx/Dockerfile
+    ports:
+      - 81:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./frontend/dist:/usr/share/nginx/html
+    depends_on:
+      #- backend
+      #- db
+      #- redis
+      - frontendbuilder
+    networks:
+      - nginx_network
+
+networks:  # <-- and here
+  nginx_network:
+    driver: bridge
