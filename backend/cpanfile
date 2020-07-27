@@ -1,0 +1,13 @@
+# libmysqlclient-dev
+# mysql-client
+requires 'Syntax::Keyword::Try';
+requires 'Modern::Perl';
+requires 'Redis::JobQueue';
+requires 'DBD::mysql';
+requires 'DBIx::Class', '0.082842';
+requires 'DBIx::Class::DeploymentHandler', '0.002233';
+requires 'DBIx::Class::Schema::Loader';
+requires 'Dancer2', '0.300004';
+# requires 'Dancer2::ModuleLoader';
+requires 'Dancer2::Plugin::DBIC', '0.0100';
+requires 'Dancer2::Logger::Log4perl';
