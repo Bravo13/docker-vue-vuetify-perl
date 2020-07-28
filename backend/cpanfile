@@ -3,6 +3,8 @@
 requires 'Syntax::Keyword::Try';
 requires 'Modern::Perl';
 requires 'Redis::JobQueue';
+requires 'XML::Simple';
+requires 'LWP::UserAgent';
 requires 'DBD::mysql';
 requires 'DBIx::Class', '0.082842';
 requires 'DBIx::Class::DeploymentHandler', '0.002233';

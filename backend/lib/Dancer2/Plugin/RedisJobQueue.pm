@@ -33,15 +33,17 @@ has jq_failed_queue => (
 
 sub add_task :PluginKeyword {
     my $plugin = shift;
-    my ($job_type, $job_data) = @_;
+    my (%job_data) = @_;
 
     my $config = $plugin->app->config->{plugins}->{RedisJobQueue};
+    my $expire_config = $config->{expire} // {};
     $plugin->jq->add_job({
         queue => $config->{queue},
-        workload => JSON::encode_json({ type => $job_type, data => $job_data }),
-        expire      => 12*60*60
+        workload => JSON::to_json(\%job_data),
+        expire => $expire_config->{$job_data{type}} // 24*60*60
     });
 }
+
 register_plugin;
 
 1;
