@@ -4,18 +4,13 @@ use Dancer2::Plugin::DBIC;
 use Dancer2::Plugin::Routes;
 use Dancer2::Plugin::Auth;
 use Dancer2::Plugin::Permissions;
-use Dancer2::Plugin::RedisJobQueue;
+use Dancer2::Plugin::Notifications;
+
+use App::Controller::Auth;
 
 any '/healthcheck' => sub {
     debug "healtcheck";
     return { healthcheck => "ok" };
-};
-
-any '/add_task' => sub {
-    add_task('sms', { resipient => 'Kolya', data => { param => 'value'}});
-    return {
-        ok => 1
-    }
 };
 
 any '/testt' => has_permission 'read_all' => sub {

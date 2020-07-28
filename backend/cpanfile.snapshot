@@ -1005,6 +1005,26 @@ DISTRIBUTIONS
       Dancer2 0.200000
       ExtUtils::MakeMaker 0
       Minion 0
+  Dancer2-Plugin-Redis-0.009
+    pathname: S/SY/SYSPETE/Dancer2-Plugin-Redis-0.009.tar.gz
+    provides:
+      Dancer2::Plugin::Redis 0.009
+      Dancer2::Plugin::Redis::Serialization::Sereal 0.001
+      Dancer2::Plugin::Redis::SerializationRole 0.001
+    requirements:
+      Carp 0
+      Dancer2 0.200000
+      Dancer2::Plugin 0.200000
+      ExtUtils::MakeMaker 0
+      Moo 0
+      Moo::Role 0
+      Redis 0
+      Safe::Isa 0
+      Try::Tiny 0
+      Type::Tiny 0
+      Types::Standard 0
+      perl 5.010
+      strictures 0
   Data-Dump-1.23
     pathname: G/GA/GAAS/Data-Dump-1.23.tar.gz
     provides:
@@ -3336,6 +3356,33 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Test::More 0
       perl 5.006001
+  Sereal-Decoder-4.017
+    pathname: Y/YV/YVES/Sereal-Decoder-4.017.tar.gz
+    provides:
+      Sereal::Decoder 4.017
+      Sereal::Decoder::Constants 4.017
+      Sereal::Performance undef
+    requirements:
+      ExtUtils::MakeMaker 7.0
+      ExtUtils::ParseXS 2.21
+      File::Find 0
+      File::Path 0
+      Test::LongString 0
+      XSLoader 0
+      perl 5.008
+  Sereal-Encoder-4.017
+    pathname: Y/YV/YVES/Sereal-Encoder-4.017.tar.gz
+    provides:
+      Sereal::Encoder 4.017
+      Sereal::Encoder::Constants 4.017
+    requirements:
+      ExtUtils::MakeMaker 7.0
+      ExtUtils::ParseXS 2.21
+      File::Find 0
+      File::Path 0
+      Test::LongString 0
+      XSLoader 0
+      perl 5.008
   Snowball-Norwegian-1.2
     pathname: A/AS/ASKSH/Snowball-Norwegian-1.2.tar.gz
     provides:
@@ -3647,6 +3694,14 @@ DISTRIBUTIONS
       Try::Tiny 0.07
       strict 0
       warnings 0
+  Test-LongString-0.17
+    pathname: R/RG/RGARCIA/Test-LongString-0.17.tar.gz
+    provides:
+      Test::LongString 0.17
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test::Builder 0.12
+      Test::Builder::Tester 1.04
   Test-MockTime-0.17
     pathname: D/DD/DDICK/Test-MockTime-0.17.tar.gz
     provides:

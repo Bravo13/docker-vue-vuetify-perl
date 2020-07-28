@@ -13,3 +13,6 @@ requires 'Dancer2', '0.300004';
 # requires 'Dancer2::ModuleLoader';
 requires 'Dancer2::Plugin::DBIC', '0.0100';
 requires 'Dancer2::Logger::Log4perl';
+requires 'Dancer2::Plugin::Redis';
+requires 'Sereal::Decoder';
+requires 'Sereal::Encoder';

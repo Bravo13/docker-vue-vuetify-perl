@@ -8,21 +8,6 @@ sub BUILD {
     my $plugin = shift;
     my $app = $plugin->app;
     my $dsl = $plugin->dsl;
-
-    my $routes  = $plugin->find_plugin('Dancer2::Plugin::Routes')
-        or $dsl->send_error('Could not find Routes');
-
-    $routes->register_route({
-        code => sub { return { authok => 1}},
-        regexp => '/auth/google',
-        method => 'post'
-    });
-
-    $routes->register_route({
-        code => \&generate_token,
-        regexp => '/auth/phone',
-        method => 'post'
-    });
 };
 
 sub generate_token {
