@@ -93,4 +93,12 @@ __PACKAGE__->add_unique_constraint("name_UNIQUE", ["name"]);
 
 __PACKAGE__->has_many('group_permissions' => 'App::Model::Result::GroupPermission', 'permission_id');
 __PACKAGE__->many_to_many('groups' => 'group_permissions', 'group_id');
+
+sub TO_JSON {
+    my $self = shift;
+    return {
+        name => $self->name,
+        description => $self->description
+    }
+}
 1;
