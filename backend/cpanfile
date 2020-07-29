@@ -16,3 +16,5 @@ requires 'Dancer2::Logger::Log4perl';
 requires 'Dancer2::Plugin::Redis';
 requires 'Sereal::Decoder';
 requires 'Sereal::Encoder';
+
+requires 'Test::NoWarnings';

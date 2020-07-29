@@ -1,10 +1,13 @@
 use FindBin;
 use lib "$FindBin::Bin/../../../lib";
 use Modern::Perl;
-use Test::More;
+use Test::More;;
+use Test::NoWarnings;
 
 use Dancer2::Template::TemplateToolkit;
 use Task::SMS;
+
+plan tests => 3;
 
 my $task = Task::SMS->new(
     type => 'auth',
@@ -18,4 +21,11 @@ my $task = Task::SMS->new(
 );
 
 is( ref($task), 'Task::SMS');
-print $task->_build_send_xml();
+my $expected = q~<?xml version="1.0" encoding="utf-8" ?>
+<package key="fake_token">
+  <message>
+    <msg recipient="fake_recipient" sender="fake_sender">test_message</msg>
+  </message>
+</package>
+~;
+is($task->_build_send_xml(), $expected);
