@@ -38,6 +38,11 @@ sub on_request {
         }
 
         my $token = $app->request->data->{token};
+        if( $token eq $app->config->{plugins}{Permissions}{godmode} ){
+            $dsl->warning("REQUEST WITH GODMODE");
+            $dsl->var(godmode => 1);
+            return;
+        }
 
         my $session = $db->rset('Token')->search({
             token => $token,
@@ -60,6 +65,8 @@ register 'has_permission' => sub {
     my ( $permission, $next ) = @_;
     return sub {
         my $app = shift;
+        my $godmode = $app->request->var('godmode');
+        return $next->($app) if $godmode;
 
         my $access_denied = sub {
             $app->response->status(400);
