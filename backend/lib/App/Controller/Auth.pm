@@ -59,7 +59,6 @@ register_route {
             # my $blocked = redis_get("${phone}_sms_code_blocked");
             my $redis_attempts_key = "${phone}_sms_auth_attempts";
             my $attempts = redis_get($redis_attempts_key) || 0;
-            # if($blocked){
             if($attempts >= 4){
                 status 'bad_request';
                 $response->{error} = "Too many attempts to send code. Wait a while";
