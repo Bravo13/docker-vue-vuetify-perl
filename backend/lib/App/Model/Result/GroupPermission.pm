@@ -42,9 +42,7 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 0 },
 );
 
-=head1 UNIQUE CONSTRAINTS
-
-=head2 C<group_permission>
+=head1 PRIMARY KEY
 
 =over 4
 
@@ -56,11 +54,11 @@ __PACKAGE__->add_columns(
 
 =cut
 
-__PACKAGE__->add_unique_constraint("group_permission", ["group_id", "permission_id"]);
+__PACKAGE__->set_primary_key("group_id", "permission_id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07048 @ 2020-07-27 21:09:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DDAFrn6YySJwnAJZvRJdQQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-30 02:17:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WzEl/ENn7SO6eV0JhxipIg
 
 
 __PACKAGE__->belongs_to('group_id' => 'App::Model::Result::Group');
