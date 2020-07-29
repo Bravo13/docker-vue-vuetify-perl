@@ -100,4 +100,13 @@ sub has_permission {
   my $id = !ref($permission) ? $permission : $permission->name;
   return !! grep { $_->name eq $id } $self->permissions();
 }
+
+sub TO_JSON {
+    my $self = shift;
+    return {
+        id => $self->id,
+        name => $self->name,
+        description => $self->description
+    }
+}
 1;
