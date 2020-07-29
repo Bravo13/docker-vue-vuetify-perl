@@ -12,7 +12,7 @@ register_route {
         my $params = request->data;
         my $response = {};
 
-        my $phone = $params->{phone};
+        my $phone = $params->{phone} // '';
         my $redis_confirm_code_key = "${phone}_confirm_code";
         if($params->{code}){
             # check phone in redis
@@ -67,7 +67,7 @@ register_route {
             }
 
             # sending new code 
-            redis_set($redis_attempts_key, $attempts++);
+            redis_set($redis_attempts_key, ++$attempts);
             redis_expire($redis_attempts_key, 15 * 60); # set expiration time to 15 min
 
             my $confirmation_code = int(rand(9999));
