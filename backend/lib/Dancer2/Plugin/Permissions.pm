@@ -83,7 +83,7 @@ register 'has_permission' => sub {
 
 register 'register_permission' => sub {
     my $dsl = shift;
-    my $permission = shift;
+    my (@permissions) = @_;
 
     my $app = $dsl->app;
 
@@ -93,7 +93,7 @@ register 'register_permission' => sub {
     }
 
     my $model = $db->resultset('Permission');
-    my $obj = $model->find_or_create({ name => $permission, module => ((caller(1))[0]) });
+    $model->find_or_create({ name => $_, module => ((caller(1))[0]) }) for @permissions;
 };
 
 register_plugin;
