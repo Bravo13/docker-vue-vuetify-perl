@@ -86,8 +86,7 @@ register 'register_permission' => sub {
     }
 
     my $model = $db->resultset('Permission');
-
-    my $obj = $model->find_or_create($permission);
+    my $obj = $model->find_or_create({ name => $permission, module => ((caller(1))[0]) });
 };
 
 register_plugin;
