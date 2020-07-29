@@ -19,13 +19,14 @@ use base 'DBIx::Class::Core';
 
 =cut
 
-__PACKAGE__->table("`groups`");
+__PACKAGE__->table("groups");
 
 =head1 ACCESSORS
 
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 name
@@ -50,7 +51,7 @@ __PACKAGE__->table("`groups`");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "name",
   { data_type => "varchar", is_nullable => 1, size => 45 },
   "title",
@@ -86,8 +87,8 @@ __PACKAGE__->set_primary_key("id");
 __PACKAGE__->add_unique_constraint("name_UNIQUE", ["name"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07048 @ 2020-07-27 21:09:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vRMhSelvFRPSPVo+1tXrdA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2020-07-30 02:18:05
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UvIUVh6RSjRG3wJkO97LeQ
 
 
 __PACKAGE__->has_many('group_permissions' => 'App::Model::Result::GroupPermission', 'group_id');
