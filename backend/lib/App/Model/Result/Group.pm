@@ -19,7 +19,7 @@ use base 'DBIx::Class::Core';
 
 =cut
 
-__PACKAGE__->table("groups");
+__PACKAGE__->table("`groups`");
 
 =head1 ACCESSORS
 
