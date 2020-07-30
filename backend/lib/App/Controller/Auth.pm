@@ -5,6 +5,8 @@ use Dancer2::Plugin::Redis;
 use Dancer2::Plugin::Notifications;
 use Dancer2::Plugin::DBIC;
 
+use Dancer2::Plugin::UserAgent;
+
 register_route {
     method => "post",
     regexp => "/auth/phone",
@@ -58,6 +60,44 @@ register_route {
             $response->{message} = "Code sent to phone. Code expires in 15 minutes";
         }
 
+        return $response;
+    }
+};
+
+register_route {
+    method => 'post',
+    regexp => '/auth/google',
+    code => sub {
+        my $params = request->data;
+        my $code = $params->{code};
+        my $response = {};
+        send_error("No code in request", 400) unless($code);
+
+        my $ua = LWP::UserAgent->new();
+        my $res = send_get( 
+            'https://oauth2.googleapis.com/tokeninfo?id_token='.$code,
+        );
+
+        unless( $res->is_success ){
+            error $res->content;
+            send_error("System error");
+        }
+
+        my $token_data = from_json($res->content);
+
+        my $user = rset('User')->find_or_create({ email => $token_data->{email} });
+
+        my $token_model = rset('Token');
+        my $token_entity = $token_model->find({ owner_id => $user->id, type => 'user', expire_time => { '>' => time } });
+        $token_entity = $token_model->create_new(
+            owner_id => $user->id,
+            expire_time => time + 24 * 60 * 60,
+            type => 'user'
+        ) unless $token_entity;
+
+        $response = {
+            token => $token_entity->token,
+        };
         return $response;
     }
 };
