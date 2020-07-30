@@ -120,6 +120,24 @@ register_route {
     method => "post",
     regexp => "/group/permissions/list",
     code => has_permission 'edit_group', sub {
+        my $groups_model = rset('Group');
+        my $name = request->data->{name};
+        unless( $name ){
+            return {
+                error => "Group not found"
+            }
+        }
+
+        my $group = $groups_model->find({name => $name});
+        unless($group){
+            return {
+                error => "Group not found"
+            }
+        }
+
+        return [
+            map { $_->TO_JSON } $group->permissions
+        ]
 
     }
 };
@@ -128,7 +146,34 @@ register_route {
     method => "post",
     regexp => "/group/permissions/set",
     code => has_permission 'edit_group', sub {
+        my $groups_model = rset('Group');
+        my $name = request->data->{name};
+        unless( $name ){
+            return {
+                error => "Group not found"
+            }
+        }
 
+        my $group = $groups_model->find({name => $name});
+        unless($group){
+            return {
+                error => "Group not found"
+            }
+        }
+
+        my $permission_names = request->data->{permissions};
+        unless( ref($permission_names) eq 'ARRAY' ){
+            return {
+                error => "Permissions list should be array of names"
+            }
+        }
+
+        my @permissions = rset('Permission')->search({ name => $permission_names })->all();
+        $group->set_permissions(\@permissions);
+
+        return {
+            success => 1
+        }
     }
 };
 
