@@ -17,18 +17,10 @@ register_route {
         if($params->{code}){
             # check phone in redis
             my $expected_confirm_code = redis_get($redis_confirm_code_key);
-            unless($expected_confirm_code){
-                status 'bad_request';
-                $response->{error} = "Code expired. Send request again";
-                return $response;
-            }
+            send_error("Code expired. Send request again", 400) unless($expected_confirm_code);
 
             # check if confirmation code is ok
-            unless($expected_confirm_code eq $params->{code}){
-                status 'bad_request';
-                $response->{error} = "Wrong confirmation code";
-                return $response;
-            }
+            send_error("Wrong confirmation code", 400) unless($expected_confirm_code eq $params->{code});
 
             # get or create userprofile
             my $user_model = rset('User');
@@ -47,23 +39,13 @@ register_route {
         } else {
 
             # check phone
-            if(
-                $phone !~ /^\d{10}$/
-            ) {
-                status 'bad_request';
-                $response->{error} = "Phone has wrong format";
-                return $response;
-            }
-            
+            send_error("Phone has wrong format", 400) if( $phone !~ /^\d{10}$/);            
+
             # phone not blocked for sending codes
             # my $blocked = redis_get("${phone}_sms_code_blocked");
             my $redis_attempts_key = "${phone}_sms_auth_attempts";
             my $attempts = redis_get($redis_attempts_key) || 0;
-            if($attempts >= 4){
-                status 'bad_request';
-                $response->{error} = "Too many attempts to send code. Wait a while";
-                return $response;
-            }
+            send_error("Too many attempts to send code. Wait a while", 400) if($attempts >= 4);
 
             # sending new code 
             redis_set($redis_attempts_key, ++$attempts);
