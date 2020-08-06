@@ -40,15 +40,13 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     methods: {
         sendPhone(){
             this.isLoading = true;
             this.confirmationState = true;
 
-            axios.post('/auth/phone', { phone: this.phoneNumber })
+            this.axios.post('/auth/phone', { phone: this.phoneNumber })
             .then( (response) => {
                 this.isLoading = false;
                 this.confirmationState = true;
@@ -64,7 +62,7 @@ export default {
             this.isLoading = true;
             this.confirmationState = true;
 
-            axios.post('/auth/phone', { phone: this.phoneNumber, code: this.code })
+            this.axios.post('/auth/phone', { phone: this.phoneNumber, code: this.code })
             .then( (response) => {
                 this.$store.commit('auth/setAuthToken', response.data.token);
                 this.closeDialog();

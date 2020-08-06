@@ -11,7 +11,7 @@
 
 <script>
 import GoogleSignInButton from 'vue-google-signin-button-directive'
-import axios from 'axios';
+import {mapActions} from 'vuex';
 export default {
     directives: {
         GoogleSignInButton
@@ -21,9 +21,13 @@ export default {
         clientId: '534690010443-u4q8reg6m8rtf15p36j3lkn7rufrq2k1.apps.googleusercontent.com'
     }),
     methods: {
+        ...mapActions(['call']),
         OnGoogleAuthSuccess (idToken) {
             this.is_loading = true;
-            axios.post('/auth/google', { code: idToken })
+            this.call({
+                url:'/auth/google',
+                data: { code: idToken }
+            })
             .then( (response) => {
                 this.is_loading = false;
                 this.$store.commit('auth/setAuthToken', response.data.token);

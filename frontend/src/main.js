@@ -1,11 +1,16 @@
 import Vue from 'vue'
-import './plugins/axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import VuetifyDialog from 'vuetify-dialog';
 
 Vue.config.productionTip = false
+Vue.use(VuetifyDialog, {
+  context: {
+    vuetify
+  }
+});
 
 new Vue({
   router,

@@ -12,33 +12,29 @@
 
 
     </v-app-bar>
-
+    <Menu/>
     <v-main>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 import Auth from './components/Auth';
-
-import axios from 'axios';
+import Menu from './components/Menu';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
-    Auth
+    Auth,
+    Menu
   },
 
   data: () => ({
-    axios
   }),
 
   methods: {
-    http: () => this.axios
   }
 };
 </script>
