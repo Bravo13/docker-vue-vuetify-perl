@@ -135,9 +135,11 @@ register_route {
             }
         }
 
-        return [
-            map { $_->TO_JSON } $group->permissions
-        ]
+        return {
+            permissions => [
+                map { $_->TO_JSON } $group->permissions
+            ]
+        }
 
     }
 };
